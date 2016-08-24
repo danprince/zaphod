@@ -1,0 +1,39 @@
+---
+layout: default.html
+---
+
+<h1 class="code">
+  <span class="func__name">{{func.name}}</span>
+  <span class="func__params">{{func.params}}</span>
+</h1>
+<p>
+<nav class="doc__links">
+  <a href="https://github.com/danprince/zaphod/blob/master/src/index.js#L{{func.loc.start.line}}-L{{func.loc.end.line}}" title="View Source"><i class="icon-export"></i></a>
+  |
+  <a href="https://github.com/danprince/zaphod/edit/master/docs/{{src}}" title="Edit Docs"><i class="icon-edit"></i></a>
+  |
+</nav>
+{{description}}
+</p>
+<hr />
+
+{{{contents}}}
+
+
+{{#if see-also.length}}
+<hr />
+<h3>See Also</h3>
+<div class="grid">
+  {{#each see-also}}
+  <div class="grid__column">
+    <div class="see-also">
+      <h4 class="code">
+        <a href="/api/{{this}}/">{{this}}</a>
+      </h4>
+      <hr />
+      {{at ../docs this "description"}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/if}}

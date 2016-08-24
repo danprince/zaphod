@@ -1,0 +1,41 @@
+{
+  "name": "zaphod",
+  "version": "0.0.2",
+  "description": "Clojure's API for JavaScript's Objects",
+  "main": "index.js",
+  "jsnext:main": "src/index.js",
+  "repository": "danprince/zaphod",
+  "scripts": {
+    "test": "babel-tape-runner src/index.spec.js | tap-spec",
+    "docs": "node tools/make-docs.js",
+    "watch-docs": "watch -p 'docs/**' -c 'npm run docs'",
+    "prepublish": "babel src/index.js --out-file index.js",
+    "postpublish": "rm index.js"
+  },
+  "keywords": [
+    "immutable",
+    "clojure",
+    "function",
+    "bind"
+  ],
+  "author": "Dan Prince",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-tape-runner": "^2.0.1",
+    "babylon": "^6.9.1",
+    "gray-matter": "^2.0.2",
+    "handlebars": "^4.0.5",
+    "metalsmith": "^2.2.0",
+    "metalsmith-define": "^2.0.1",
+    "metalsmith-layouts": "^1.6.5",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-metallic": "^1.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0",
+    "watch-cli": "^0.2.1"
+  }
+}

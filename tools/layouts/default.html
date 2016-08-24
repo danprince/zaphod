@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <nav class="nav--top nav--dark">
+        <input
+          type="text"
+          id="search"
+          class="input--search code"
+          placeholder="Search..." />
+      </nav>
+      <ul class="search-results" id="search-results">
+        {{#each api}}
+        <li class="search-results__result" data-search="{{@key}}">
+          <a href="/api/{{@key}}/" class="code">
+            <span class="func__name">{{@key}}</span>
+            <span class="func__params">{{this.params}}</span>
+          </a>
+        </li>
+        {{/each}}
+      </ul>
+    </aside>
+    <main class="main">
+      <nav class="nav--top">
+        <a
+          href="/"
+          class="{{#if active.index}}active{{/if}}">
+          About
+        </a>
+        <a
+          href="/api"
+          class="{{#if active.api-index}}active{{/if}}">
+          API
+        </a>
+        <a href="http://github.com/danprince/zaphod"><i class="icon-github"></i></a>
+      </nav>
+      <div class="main__content">
+        {{{contents}}}
+      </div>
+    </main>
+    <script>
+      var search = document.getElementById('search');
+      var results = document.getElementById('search-results');
+
+      search.addEventListener('input', function onSearch(event) {
+        var query = event.target.value.toLowerCase();
+        var validQuery = query.length > 0;
+
+        for(var i = 0; i < results.children.length; i++) {
+          var node = results.children[i];
+          var name = node.getAttribute('data-search');
+          var queryMatch = name.indexOf(query) >= 0;
+
+          if(queryMatch) {
+            node.style.display = 'block';
+          } else {
+            if(validQuery) {
+              node.style.display = 'none';
+            } else {
+              node.style.display = 'block';
+            }
+          }
+        }
+      });
+    </script>
+  <style>
+/**
+ * Icon fonts
+ */
+
+@font-face {
+  font-family: 'icons';
+  src:
+    url('/assets/fonts/icons.ttf?6ckr4r') format('truetype'),
+    url('/assets/fonts/icons.woff?6ckr4r') format('woff'),
+    url('/assets/fonts/icons.svg?6ckr4r#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-github:before {
+  content: "\f09b";
+}
+.icon-link:before {
+  content: "\e900";
+}
+.icon-export:before {
+  content: "\e901";
+}
+.icon-warning:before {
+  content: "\e902";
+}
+.icon-edit:before {
+  content: "\e903";
+}
+
+
+/**
+ * Web fonts
+ */
+@font-face {
+  font-family: 'League Spartan';
+  src: url('/assets/fonts/leaguespartan-bold.eot');
+  src: url('/assets/fonts/leaguespartan-bold.eot?#iefix') format('embedded-opentype'),
+       url('/assets/fonts/leaguespartan-bold.woff2') format('woff2'),
+       url('/assets/fonts/leaguespartan-bold.woff') format('woff'),
+       url('/assets/fonts/leaguespartan-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mononoki';
+  src: url('/assets/fonts/mononoki-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Universalis ADF Std';
+  src: url('/assets/fonts/UniversalisADFStd-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Universalis ADF Std';
+  src: url('/assets/fonts/UniversalisADFStd-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Universalis ADF Std';
+  src: url('/assets/fonts/UniversalisADFStd-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+  </style>
+  </body>
+</html>
