@@ -2,7 +2,7 @@ import test from 'tape';
 import {
   assoc, assocIn, dissoc, get, getIn, update, updateIn, merge,
   keys, vals, size, equals, conj, first, rest, flatten, distinct,
-  dropWhile, drop, groupBy, interleave, interpose, isEmpty, peek, pop,
+  dropWhile, drop, groupBy, interpose, isEmpty, peek, pop,
   reverse, sort, take, takeWhile, zip, constantly, identity,
   inc, dec, range, repeat, repeatedly, transient
 } from './';
@@ -646,28 +646,6 @@ test('groupBy', (assert) => {
     ['arthur', 'ford', 'zaphod', 'trillian']::groupBy(str => str[0]),
     { a: ['arthur'], f: ['ford'], z: ['zaphod'], t: ['trillian'] },
     'should group items by a given key'
-  );
-});
-
-test('interleave', (assert) => {
-  assert.plan(3);
-
-  assert.deepEquals(
-    [1, 3, 5]::interleave([2, 4, 6]),
-    [1, 2, 3, 4, 5, 6],
-    'should interleave same length collections'
-  );
-
-  assert.deepEquals(
-    [1, 3, 5]::interleave([2]),
-    [1, 2],
-    'should interleave for the length of shortest collection'
-  );
-
-  assert.deepEquals(
-    ['a', 'a', 'a']::interleave(['b', 'b', 'b'], ['c', 'c', 'c']),
-    ['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c'],
-    'should work for multiple collections'
   );
 });
 
