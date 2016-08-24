@@ -38,15 +38,6 @@ The `::` (function-bind) operator is still at the proposal stage for the languag
 
 Not everyone is ready to adopt experimental syntax, but it's completely possible to use Zaphod's functions without function-bind. Check out the [compatibility interface](/compat/).
 
-## Differences from Clojure
-Unlike Clojure, these functions are not built to support common protocols like Seq or Associative, meaning there's no ambiguity around the types of returned collections. For instance, there's no distinction between a Seq or a Vector, Zaphod functions just use arrays instead.
-
-Because these functions work with JavaScript's own native data structures, there's only limited support for the structural sharing that you'll find in [Mori][3] and [ImmutableJS][4].
-
-To keep the JavaScript codebase idiomatic, use of multiple-arity functions has been minimized. Zaphod makes use of [`...` (rest parameters)][8] and some functions take a final optional argument.
-
-None of the collections are lazy, but [there are plans][15] to support lazy sequences using iterators in the future.
-
 ## Usage
 Zaphod is available through npm.
 
@@ -58,11 +49,6 @@ Check out the [getting started](/getting-started/) guide for an in-depth explana
 
 [1]: https://en.wikipedia.org/wiki/Zaphod_Beeblebrox
 [2]: https://clojure.org/
-[3]: https://swanodette.github.io/mori
-[4]: https://facebook.github.io/immutable-js
-[5]: https://clojurescript.org
-[6]: https://github.com/jussi-kalliokoski/trine
-[7]: https://github.com/aearly/icepick
 [8]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/rest_parameters
 [9]: https://github.com/tc39/proposal-bind-operator
 [10]: https://gitter.im/zaphod
