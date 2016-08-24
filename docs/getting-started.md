@@ -49,7 +49,9 @@ We need to tell Babel to use the function-bind plugin, so we'll create the follo
 }
 ```
 
-Normally we'd use a module bundler like Webpack, Rollup or Browserify to actually run the Babel transform, but for this example, we'll just test that everything's working by installing the babel-cli and running our file with babel-node. Follow these commands and you should get the same output.
+Normally we'd use a module bundler like Webpack, Rollup or Browserify to actually run the Babel transform, but for this example, we'll just test that everything's working by installing the babel-cli and running our file with babel-node.
+
+Follow these commands and you should get the same output.
 
 ```
 $ npm install -g babel-cli

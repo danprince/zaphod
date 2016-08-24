@@ -22,7 +22,7 @@ state::update('count', inc)
 
 However, you don't need to know Clojure to make the most of Zaphod. This library is just a set of JavaScript functions that make working with immutable data more fun!
 
-Try [the tutorial](/tutorial/), read [the cheatsheet](/cheatsheet/), join [the chat][10] or explore [the code][11].
+Try [the tutorial](/tutorial/), check out [the cheatsheet](/cheatsheet/), join [the chat][10] or explore [the code][11].
 
 ## Rationale
 Working with JavaScript's data structures as though they were immutable is a challenge. Although arrays have some methods which return new array instances, the only way to update objects without mutating them is to use unwieldy functions like `Object.assign`.

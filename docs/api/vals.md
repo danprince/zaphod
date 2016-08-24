@@ -10,7 +10,7 @@ The `vals` function returns an array of the values in a collection. It is the co
 
 Under the hood it uses `Object.keys`, but rather than throwing a runtime exception when called on a bad value, it returns an empty array.
 
-## Examples
+### Examples
 Calling `vals` on an object will return an array of the values inside the object.
 
 ```js

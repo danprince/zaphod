@@ -17,13 +17,13 @@ state::update('count', inc)
 
 However, you don't need to know Clojure to make the most of Zaphod. This library is just a set of JavaScript functions that make working with immutable data more fun!
 
+Find the [docs][4], [cheatsheet][5] and [rationale][6] at [the website][3].
+
 ```js
 npm install --save zaphod
 ```
 
 Check out the [getting started][7] guide for an in-depth explanation on configuring Babel to work with the function-bind operator.
-
-Find the [docs][4], [cheatsheet][5] and [rationale][6] at [the website][3].
 
 [1]: https://en.wikipedia.org/wiki/Zaphod_Beeblebrox
 [2]: https://clojure.org/

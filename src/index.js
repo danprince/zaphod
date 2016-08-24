@@ -215,6 +215,18 @@ export function equals(val) {
   return true;
 }
 
+export function isEmpty() {
+  if(this instanceof Array) {
+    return this.length === 0;
+  }
+
+  if(typeof this === 'string') {
+    return this.length === 0;
+  }
+
+  return this::keys().length === 0;
+}
+
 export function conj(...items) {
   if(!(this instanceof Array)) {
     throw new TypeError(`Can't conj onto ${typeof this}!`);
@@ -318,24 +330,6 @@ export function groupBy(func) {
   return grouped;
 }
 
-export function interleave(...colls) {
-  const interleaved = [];
-  const lengths = colls.map(coll => coll.length);
-  const length = Math.min(...lengths);
-
-  for(let i = 0; i < length; i++) {
-    interleaved.push(this[i]);
-    for(let j = 0; j < colls.length; j++) {
-      const coll = colls[j];
-      if(coll.length > i) {
-        interleaved.push(coll[i]);
-      }
-    }
-  }
-
-  return interleaved;
-}
-
 export function interpose(separator) {
   const interposed = [];
   for(let i = 0; i < this.length; i++) {
@@ -344,18 +338,6 @@ export function interpose(separator) {
 
   // remove final separator
   return interposed.slice(0, -1);
-}
-
-export function isEmpty() {
-  if(this instanceof Array) {
-    return this.length === 0;
-  }
-
-  if(typeof this === 'string') {
-    return this.length === 0;
-  }
-
-  return this::keys().length === 0;
 }
 
 export function peek() {
