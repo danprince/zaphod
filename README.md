@@ -1,6 +1,4 @@
 # Zaphod
-[_(Zay-fod)_](https://en.wikipedia.org/wiki/Zaphod_Beeblebrox)
-
 [![Travis](https://img.shields.io/travis/danprince/zaphod.svg?maxAge=2592000)](https://travis-ci.org/danprince/zaphod)
 [![npm](https://img.shields.io/npm/v/zaphod.svg?maxAge=2592000)](https://npm.com/package/zaphod)
 [![Gitter](https://img.shields.io/gitter/room/zaphodjs/Lobby.svg?maxAge=2592000)](https://gitter.im/zaphodjs/Lobby)
@@ -18,8 +16,14 @@ state::update('count', inc)
 
 However, you don't need to know Clojure to make the most of Zaphod. This library is just a set of JavaScript functions that make working with immutable data more fun!
 
+Find the [API docs][4], [guides][5] and [rationale][6] at [the website][3].
+
 [1]: https://en.wikipedia.org/wiki/Zaphod_Beeblebrox
 [2]: https://clojure.org/
+[3]: https://zaphod.surge.sh
+[4]: https://zaphod.surge.sh/api
+[5]: https://zaphod.surge.sh/cheatsheet
+[6]: https://zaphod.surge.sh/tutorial
 [8]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/rest_parameters
 [9]: https://github.com/tc39/proposal-bind-operator
 [10]: https://gitter.im/zaphod
