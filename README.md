@@ -2,8 +2,7 @@
 [![Travis](https://img.shields.io/travis/danprince/zaphod.svg?maxAge=2592000)](https://travis-ci.org/danprince/zaphod)
 [![npm](https://img.shields.io/npm/v/zaphod.svg?maxAge=2592000)](https://npm.com/package/zaphod)
 [![Gitter](https://img.shields.io/gitter/room/zaphodjs/Lobby.svg?maxAge=2592000)](https://gitter.im/zaphodjs/Lobby)
-| [API Docs][4]
-| [Cheatsheet][5]
+[![API Docs](https://img.shields.io/badge/API-Docs-blue.svg)][4]
 
 [Clojure's][2] immutable data API for JavaScript's own data structures, using the [function bind operator][9].
 
@@ -24,7 +23,7 @@ npm install --save zaphod
 
 Check out the [getting started][7] guide for an in-depth explanation on configuring Babel to work with the function-bind operator.
 
-Find the [API docs][4], [guides][5] and [rationale][6] at [the website][3].
+Find the [docs][4], [cheatsheet][5] and [rationale][6] at [the website][3].
 
 [1]: https://en.wikipedia.org/wiki/Zaphod_Beeblebrox
 [2]: https://clojure.org/
