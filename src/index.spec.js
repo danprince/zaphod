@@ -127,7 +127,7 @@ test('remove', (assert) => {
 });
 
 test('get', (assert) => {
-  assert.plan(6);
+  assert.plan(8);
 
   assert.is(
     ({ paranoid: 'android' })::get('paranoid'),
@@ -165,10 +165,22 @@ test('get', (assert) => {
     'android',
     'should work for properties on the protoype chain'
   );
+
+  assert.is(
+    undefined::get('meaning', 42),
+    42,
+    'should return notFound when called on undefined'
+  );
+
+  assert.is(
+    null::get('meaning', 42),
+    42,
+    'should return notFound when called on null'
+  );
 });
 
 test('getIn', (assert) => {
-  assert.plan(7);
+  assert.plan(9);
 
   assert.throws(
     () => ({})::getIn(2),
@@ -210,6 +222,18 @@ test('getIn', (assert) => {
     ({ beeble: undefined })::getIn([], 'betelgeuse'),
     'betelgeuse',
     'should use notFound if passed empty array of keys'
+  );
+
+  assert.is(
+    undefined::getIn(['meaning'], 42),
+    42,
+    'should return notFound when called on undefined'
+  );
+
+  assert.is(
+    null::getIn(['meaning'], 42),
+    42,
+    'should return notFound when called on null'
   );
 });
 

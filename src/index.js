@@ -74,6 +74,10 @@ export function remove(key) {
 }
 
 export function get(key, notFound) {
+  if(this === undefined || this === null) {
+    return notFound;
+  }
+
   if(this[key] !== undefined) {
     return this[key];
   } else {
@@ -87,6 +91,10 @@ export function getIn(keys, notFound) {
   }
 
   if(keys.length === 0) {
+    return notFound;
+  }
+
+  if(this === undefined || this === null) {
     return notFound;
   }
 
