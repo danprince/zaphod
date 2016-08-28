@@ -4,7 +4,6 @@
   "description": "Clojure's API for JavaScript's Objects",
   "main": "index.js",
   "jsnext:main": "src/index.js",
-  "repository": "danprince/zaphod",
   "scripts": {
     "test": "babel-tape-runner src/index.spec.js | tap-spec",
     "docs": "node tools/make-docs.js",
