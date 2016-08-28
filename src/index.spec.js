@@ -50,7 +50,7 @@ test('set', (assert) => {
 });
 
 test('setIn', (assert) => {
-  assert.plan(6);
+  assert.plan(8);
 
   assert.throws(
     () => ({})::setIn(2),
@@ -87,6 +87,18 @@ test('setIn', (assert) => {
     ({})::setIn(['guide', 'to', 'the'], 'galaxy'),
     ({ guide: { to: { the: 'galaxy' }}}),
     'should create the path if its not there'
+  );
+
+  assert.deepEquals(
+    undefined::setIn(['guide', 'to', 'the'], 'galaxy'),
+    ({ guide: { to: { the: 'galaxy' }}}),
+    'should create whole path if called on undefined'
+  );
+
+  assert.deepEquals(
+    null::setIn(['guide', 'to', 'the'], 'galaxy'),
+    ({ guide: { to: { the: 'galaxy' }}}),
+    'should create whole path if called on null'
   );
 });
 

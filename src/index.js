@@ -35,7 +35,7 @@ export function setIn(keys, value) {
     return this;
   }
 
-  const clone = _copy(this);
+  const clone = _copy(this || {});
   let ref = clone;
   let index = 0;
 
