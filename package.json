@@ -9,8 +9,8 @@
     "test": "babel-tape-runner src/index.spec.js | tap-spec",
     "docs": "node tools/make-docs.js",
     "watch-docs": "watch -p 'docs/**' -c 'npm run docs'",
-    "prepublish": "babel src/index.js --out-file index.js",
-    "postpublish": "rm index.js"
+    "prepublish": "webpack",
+    "postpublish": "rm index.js compat.js"
   },
   "keywords": [
     "immutable",
@@ -21,7 +21,7 @@
   "author": "Dan Prince",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.11.4",
+    "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-stage-0": "^6.5.0",
     "babel-tape-runner": "^2.0.1",
@@ -35,6 +35,7 @@
     "metalsmith-metallic": "^1.0.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
-    "watch-cli": "^0.2.1"
+    "watch-cli": "^0.2.1",
+    "webpack": "^1.13.2"
   }
 }
