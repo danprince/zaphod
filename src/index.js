@@ -37,10 +37,10 @@ export function assocIn(keys, value) {
 
   const clone = _copy(this);
   let ref = clone;
-  let path = keys;
+  let index = 0;
 
-  while(path.length > 1) {
-    const key = path[0];
+  while(index < (keys.length - 1)) {
+    const key = keys[index];
 
     // make sure we create the path if needed
     if(ref[key] === undefined) {
@@ -49,10 +49,10 @@ export function assocIn(keys, value) {
       ref = ref[key] = _copy(ref[key]);
     }
 
-    path = path.slice(1);
+    index += 1
   }
 
-  ref[path[0]] = value;
+  ref[keys[index]] = value;
 
   return clone;
 }
@@ -91,10 +91,10 @@ export function getIn(keys, notFound) {
   }
 
   let ref = this;
-  let path = keys;
+  let index = 0
 
-  while(path.length > 0) {
-    const key = path[0];
+  while(index < keys.length) {
+    const key = keys[index]
 
     if(ref[key] === undefined) {
       return notFound;
@@ -102,7 +102,7 @@ export function getIn(keys, notFound) {
       ref = ref[key];
     }
 
-    path = path.slice(1);
+    index += 1
   }
 
   return ref;
