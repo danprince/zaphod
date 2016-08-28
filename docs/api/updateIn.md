@@ -4,7 +4,7 @@ description: >
   Use a function to update the value of a nested key.
 see-also:
   - update
-  - assocIn
+  - setIn
   - getIn
 ---
 

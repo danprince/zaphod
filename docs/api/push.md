@@ -4,15 +4,15 @@ description: >
   Adds items to the end of an array.
 ---
 
-Returns a new array by conj[oining] other items onto an existing one.
+Returns a new array by pushing other items onto an existing one.
 
 ### Examples
-`conj` is the immutable alternative to JavaScript's [`push`][1].
+`push` is the immutable alternative to JavaScript's [`push`][1].
 
 ```js
-import { conj } from 'zaphod';
+import { push } from 'zaphod';
 
-[1, 2]::conj(3, 4)
+[1, 2]::push(3, 4)
 // => [1, 2, 3, 4]
 ```
 

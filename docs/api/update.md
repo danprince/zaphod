@@ -4,7 +4,7 @@ description: >
   Use a function to update the value of a key in collection
 see-also:
   - updateIn
-  - assoc
+  - set
 ---
 
 The `update` function returns a new collection after updating the value at `key`, with the return value from calling `func` with the existing value and any additional arguments.

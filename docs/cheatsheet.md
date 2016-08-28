@@ -12,12 +12,8 @@ Zaphod's functions can be grouped into three categories.
 ### Keyed Collections
 These functions work with objects and arrays.
 
-[`assoc`](/api/assoc)
-[`assocIn`](/api/assocIn)
-[`assoc`](/api/assoc)
-[`assocIn`](/api/assocIn)
-[`dissoc`](/api/dissoc)
-[`get`](/api/get)
+[`set`](/api/set)
+[`setIn`](/api/setIn)
 [`getIn`](/api/getIn)
 [`update`](/api/update)
 [`updateIn`](/api/updateIn)
@@ -33,7 +29,6 @@ These functions work with objects and arrays.
 ### Indexed Collections
 These functions only work with arrays.
 
-[`conj`](/api/conj)
 [`first`](/api/first)
 [`rest`](/api/rest)
 [`take`](/api/take)
@@ -46,6 +41,7 @@ These functions only work with arrays.
 [`interleave`](/api/interleave)
 [`interpose`](/api/interpose)
 [`isEmpty`](/api/isEmpty)
+[`push`](/api/push)
 [`peek`](/api/peek)
 [`pop`](/api/pop)
 [`reverse`](/api/reverse)
@@ -71,11 +67,11 @@ These functions are just functional utilities.
 
 | Task | Mutable | Immutable |
 | ---- | ------- | --------- |
-| Setting a property | `obj.a = 3` | [`obj::assoc('a', 3)`](/api/assoc) |
-| Removing a property | `delete obj.a` | [`obj::dissoc('a')`](/api/dissoc) |
+| Setting a property | `obj.a = 3` | [`obj::set('a', 3)`](/api/set) |
+| Removing a property | `delete obj.a` | [`obj::remove('a')`](/api/remove) |
 | Getting a property | `obj.a` | [`obj::get('a')`](/api/get) |
 | Merging objects | `Object.assign(obj, src)` | [`obj::merge(src)`](/api/merge) |
-| Pushing items onto an array | `arr.push(1, 2)` | [`arr::conj(1, 2)`](/api/conj) |
+| Pushing items onto an array | `arr.push(1, 2)` | [`arr::push(1, 2)`](/api/push) |
 | Remove item from end of array | `arr.pop()` | [`arr::pop()`](/api/pop) |
 | Reversing an array | `arr.reverse()` | [`arr::reverse()`](/api/reverse) |
 | Sorting an array | `arr.sort()` | [`arr::sort()`](/api/sort) |
@@ -90,10 +86,10 @@ obj.a = 3;
 obj['a'] = 3;
 ```
 
-The [`assoc`](/api/assoc) function will return a new collection with the value for a single property updated.
+The [`set`](/api/set) function will return a new collection with the value for a single property updated.
 
 ```js
-obj::assoc('a', 3);
+obj::set('a', 3);
 ```
 
 ---
@@ -106,10 +102,10 @@ delete obj.a;
 delete obj['a'];
 ```
 
-The [`dissoc`](/api/dissoc) function will return a new collection with the property removed.
+The [`remove`](/api/remove) function will return a new collection with the property removed.
 
 ```js
-obj::dissoc('a');
+obj::remove('a');
 ```
 
 ---
@@ -136,10 +132,10 @@ The `.push` method mutates an array by adding new items to the end of it. Then i
 [1, 2, 3].push(4);
 ```
 
-The [`conj`](/api/conj) function returns a new array with the items conjoined onto the end.
+The [`push`](/api/push) function returns a new array with the items pushoined onto the end.
 
 ```js
-[1, 2, 3]::conj(4)
+[1, 2, 3]::push(4)
 ```
 
 ---

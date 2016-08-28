@@ -10,9 +10,9 @@ export function _copy(object) {
   return clone;
 }
 
-export function assoc(key, value) {
+export function set(key, value) {
   // cheap return if not enough args passed
-  if(arguments.length < assoc.length) {
+  if(arguments.length < set.length) {
     return this;
   }
 
@@ -26,9 +26,9 @@ export function assoc(key, value) {
   return clone;
 }
 
-export function assocIn(keys, value) {
+export function setIn(keys, value) {
   if(!(keys instanceof Array)) {
-    throw new TypeError(`assocIn needs keys to be an array, not ${typeof this}!`);
+    throw new TypeError(`setIn needs keys to be an array, not ${typeof this}!`);
   }
 
   if(keys.length === 0) {
@@ -57,9 +57,9 @@ export function assocIn(keys, value) {
   return clone;
 }
 
-export function dissoc(key) {
+export function remove(key) {
   // forgiving return if no arguments are passed
-  if(arguments.length < dissoc.length) {
+  if(arguments.length < remove.length) {
     return this;
   }
 
@@ -118,7 +118,7 @@ export function update(key, func, ...args) {
 export function updateIn(keys, func, ...args) {
   const current = this::getIn(keys);
   const updated = func(current, ...args);
-  return this::assocIn(keys, updated);
+  return this::setIn(keys, updated);
 }
 
 export function merge(...objects) {
@@ -227,18 +227,6 @@ export function isEmpty() {
   return this::keys().length === 0;
 }
 
-export function conj(...items) {
-  if(!(this instanceof Array)) {
-    throw new TypeError(`Can't conj onto ${typeof this}!`);
-  }
-
-  if(items.length === 0) {
-    return this;
-  }
-
-  return this.concat(items);
-}
-
 export function first() {
   return this[0];
 }
@@ -338,6 +326,18 @@ export function interpose(separator) {
 
   // remove final separator
   return interposed.slice(0, -1);
+}
+
+export function push(...items) {
+  if(!(this instanceof Array)) {
+    throw new TypeError(`Can't push onto ${typeof this}!`);
+  }
+
+  if(items.length === 0) {
+    return this;
+  }
+
+  return this.concat(items);
 }
 
 export function peek() {

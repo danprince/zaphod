@@ -1,126 +1,126 @@
 import test from 'tape';
 import {
-  assoc, assocIn, dissoc, get, getIn, update, updateIn, merge,
-  keys, vals, size, equals, conj, first, rest, flatten, distinct,
+  set, setIn, remove, get, getIn, update, updateIn, merge,
+  keys, vals, size, equals, push, first, rest, flatten, distinct,
   dropWhile, drop, groupBy, interpose, isEmpty, peek, pop,
   reverse, sort, take, takeWhile, zip, constantly, identity,
   inc, dec, range, repeat, repeatedly, transient
 } from './';
 
-test('assoc', (assert) => {
+test('set', (assert) => {
   assert.plan(6);
 
   assert.deepEqual(
-    ({ damogran: 5 })::assoc('zaphod', 'beeblebrox'),
+    ({ damogran: 5 })::set('zaphod', 'beeblebrox'),
     { damogran: 5, zaphod: 'beeblebrox' },
-    'should associate a new key/value in an object'
+    'should setiate a new key/value in an object'
   );
 
   assert.deepEqual(
-    ({ damogran: 4 })::assoc('damogran', 5),
+    ({ damogran: 4 })::set('damogran', 5),
     { damogran: 5 },
     'should overwrite existing key'
   );
 
   const computer = { deep: 'thought' };
   assert.is(
-    computer::assoc(),
+    computer::set(),
     computer,
     'should return original object for no-arg calls'
   );
 
   assert.is(
-    computer::assoc('deep', 'thought'),
+    computer::set('deep', 'thought'),
     computer,
     'should return original object when key/value will not change'
   );
 
   const arthur = { name: 'dent' };
   assert.not(
-    arthur::assoc('age', 34),
+    arthur::set('age', 34),
     arthur,
     'should not mutate original object'
   );
 
   assert.deepEqual(
-    [42, 42, 42]::assoc(0, 5),
+    [42, 42, 42]::set(0, 5),
     [5, 42, 42],
     'should work with arrays too'
   );
 });
 
-test('assocIn', (assert) => {
+test('setIn', (assert) => {
   assert.plan(6);
 
   assert.throws(
-    () => ({})::assocIn(2),
+    () => ({})::setIn(2),
     TypeError,
     'should throw for non-array path'
   );
 
   assert.deepEquals(
-    ({ trisha: { mc: 'millan' }})::assocIn(['trisha', 'mc'], 4),
+    ({ trisha: { mc: 'millan' }})::setIn(['trisha', 'mc'], 4),
     ({ trisha: { mc: 4 }}),
     'should update nested property'
   );
 
   assert.deepEqual(
-    [1, [2], 3]::assocIn([1, 0], 'a'),
+    [1, [2], 3]::setIn([1, 0], 'a'),
     [1, ['a'], 3],
     'should work with arrays'
   );
 
   const earth = { harmless: true };
   assert.not(
-    earth::assocIn(['harmless'], 'mostly'),
+    earth::setIn(['harmless'], 'mostly'),
     earth,
     'should not mutate original reference'
   );
 
   assert.is(
-    earth::assocIn([]),
+    earth::setIn([]),
     earth,
     'should return original reference for empty key array'
   );
 
   assert.deepEquals(
-    ({})::assocIn(['guide', 'to', 'the'], 'galaxy'),
+    ({})::setIn(['guide', 'to', 'the'], 'galaxy'),
     ({ guide: { to: { the: 'galaxy' }}}),
     'should create the path if its not there'
   );
 });
 
-test('dissoc', (assert) => {
+test('remove', (assert) => {
   assert.plan(5);
 
   const jeltz = { vogon: 'captain' };
   assert.is(
-    jeltz::dissoc(),
+    jeltz::remove(),
     jeltz,
     'should return original object for prank calls'
   );
 
   assert.is(
-    jeltz::dissoc('poetry'),
+    jeltz::remove('poetry'),
     jeltz,
     'should return original object when key does not exist'
   );
 
   assert.deepEqual(
-    ({ damogran: 5, zaphod: 'beeb' })::dissoc('zaphod'),
+    ({ damogran: 5, zaphod: 'beeb' })::remove('zaphod'),
     { damogran: 5 },
     'should remove a key from an object'
   );
 
   const arthur = { name: 'dent' };
   assert.not(
-    arthur::dissoc('name'),
+    arthur::remove('name'),
     arthur,
     'should not mutate original object'
   );
 
   assert.not(
-    ['pan', 'galactic', 'gargle', 'blaster']::dissoc(0),
+    ['pan', 'galactic', 'gargle', 'blaster']::remove(0),
     [ , 'galactic', 'gargle', 'blaster'],
     'should work with arrays too'
   );
@@ -470,30 +470,30 @@ test('equals', (assert) => {
   );
 });
 
-test('conj', (assert) => {
+test('push', (assert) => {
   assert.plan(4);
 
   assert.throws(
-    () => false::conj(3),
+    () => false::push(3),
     TypeError,
     'should throw when called on non-array type'
   );
 
   assert.deepEquals(
-    [1, 2]::conj(3),
+    [1, 2]::push(3),
     [1, 2, 3],
-    'should be able to conj onto end of array'
+    'should be able to push onto end of array'
   );
 
   assert.deepEquals(
-    [1]::conj(2, 3),
+    [1]::push(2, 3),
     [1, 2, 3],
-    'should be able to conj multiple values'
+    'should be able to push multiple values'
   );
 
   const xs = [1, 2, 3];
   assert.not(
-    xs::conj(4),
+    xs::push(4),
     xs,
     'should not mutate reference'
   );

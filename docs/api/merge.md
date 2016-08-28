@@ -3,7 +3,7 @@ layout: doc.html
 description: >
   Combines objects to return a new one.
 see-also:
-  - assoc
+  - set
   - update
 ---
 

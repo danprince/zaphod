@@ -17,13 +17,13 @@ $ npm install --save zaphod
 Then create the following `hello.js` file.
 
 ```js
-import { assoc, dissoc } from 'zaphod';
+import { set, remove } from 'zaphod';
 
 let greeting = { goodbye: 'world' };
 
 greeting = greeting
-  ::dissoc('goodbye')
-  ::assoc('hello', 'world');
+  ::remove('goodbye')
+  ::set('hello', 'world');
 
 console.log(greeting);
 ```

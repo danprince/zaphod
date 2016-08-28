@@ -10,14 +10,14 @@ Not everyone wants to use experimental language features, so it's also possible 
 The following snippets of code both work in the same way.
 
 ```js
-import { assoc } from 'zaphod';
+import { set } from 'zaphod';
 
-obj::assoc('key', value);
+obj::set('key', value);
 ```
 
 ```js
 var z = require('zaphod');
 
-z.assoc.call(obj, key, value);
+z.set.call(obj, key, value);
 ```
 
