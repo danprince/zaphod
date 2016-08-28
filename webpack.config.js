@@ -1,10 +1,17 @@
+const package = require('./package');
+
 module.exports = {
+  target: 'node',
   entry: {
-    index: __dirname + '/src/index.js'
+    index: [__dirname + '/src/index.js'],
+    compat: __dirname + '/src/compat.js'
   },
   output: {
     path: __dirname + '/',
-    filename: '[name].js'
+    filename: '[name].js',
+    library: package.name,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     loaders: [
