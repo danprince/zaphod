@@ -50,7 +50,7 @@ test('set', (assert) => {
 });
 
 test('setIn', (assert) => {
-  assert.plan(8);
+  assert.plan(9);
 
   assert.throws(
     () => ({})::setIn(2),
@@ -87,6 +87,12 @@ test('setIn', (assert) => {
     ({})::setIn(['guide', 'to', 'the'], 'galaxy'),
     ({ guide: { to: { the: 'galaxy' }}}),
     'should create the path if its not there'
+  );
+
+  assert.deepEquals(
+    ({})::setIn(['lucky', 0], 'galaxy'),
+    ({ lucky: ['galaxy'] }),
+    'should create arrays for numerical indexes'
   );
 
   assert.deepEquals(

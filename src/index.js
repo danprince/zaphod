@@ -44,7 +44,7 @@ export function setIn(keys, value) {
 
     // make sure we create the path if needed
     if(ref[key] === undefined) {
-      ref = ref[key] = {};
+      ref = ref[key] = typeof key === 'number' ? [] : {};
     } else {
       ref = ref[key] = _copy(ref[key]);
     }
