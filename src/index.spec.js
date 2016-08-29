@@ -13,7 +13,7 @@ test('set', (assert) => {
   assert.deepEqual(
     ({ damogran: 5 })::set('zaphod', 'beeblebrox'),
     { damogran: 5, zaphod: 'beeblebrox' },
-    'should setiate a new key/value in an object'
+    'should set a new key/value in an object'
   );
 
   assert.deepEqual(
@@ -50,7 +50,7 @@ test('set', (assert) => {
 });
 
 test('setIn', (assert) => {
-  assert.plan(9);
+  assert.plan(11);
 
   assert.throws(
     () => ({})::setIn(2),
@@ -87,6 +87,18 @@ test('setIn', (assert) => {
     ({})::setIn(['guide', 'to', 'the'], 'galaxy'),
     ({ guide: { to: { the: 'galaxy' }}}),
     'should create the path if its not there'
+  );
+
+  assert.deepEquals(
+    ({ guide: null })::setIn(['guide', 'to', 'the'], 'galaxy'),
+    ({ guide: { to: { the: 'galaxy' }}}),
+    'should create the path if it finds a null'
+  );
+
+  assert.deepEquals(
+    ({ guide: undefined })::setIn(['guide', 'to', 'the'], 'galaxy'),
+    ({ guide: { to: { the: 'galaxy' }}}),
+    'should create the path if it finds an undefined'
   );
 
   assert.ok(

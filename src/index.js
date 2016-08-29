@@ -43,7 +43,7 @@ export function setIn(keys, value) {
     const key = keys[index];
 
     // make sure we create the path if needed
-    if(ref[key] === undefined) {
+    if(ref[key] === undefined || ref[key] === null) {
       const nextKey = keys[index + 1];
       ref[key] = typeof nextKey === 'number' ? [] : {};
     } else {
