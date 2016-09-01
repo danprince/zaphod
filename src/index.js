@@ -16,6 +16,10 @@ export function set(key, value) {
     return this;
   }
 
+  if(this === undefined || this === null) {
+    return { [key]: value };
+  }
+
   // cheap return if key is already set
   if(this[key] === value) {
     return this;
@@ -35,7 +39,9 @@ export function setIn(keys, value) {
     return this;
   }
 
-  const clone = _copy(this || {});
+  const isNil = this === null || this === undefined;
+  const clone = isNil ? {} : _copy(this);
+
   let ref = clone;
   let index = 0;
 
@@ -65,6 +71,10 @@ export function remove(key) {
     return this;
   }
 
+  if(this === null || this === undefined) {
+    return {};
+  }
+
   // forgiving return for removing missing key
   if(!this.hasOwnProperty(key)) {
     return this;
@@ -89,7 +99,7 @@ export function get(key, notFound) {
 
 export function getIn(keys, notFound) {
   if(!(keys instanceof Array)) {
-    throw new TypeError(`getIn needs keys to be an array, not ${typeof this}!`);
+    throw new TypeError(`getIn needs keys to be an array, not ${typeof keys}!`);
   }
 
   if(keys.length === 0) {
@@ -106,7 +116,7 @@ export function getIn(keys, notFound) {
   while(index < keys.length) {
     const key = keys[index]
 
-    if(ref[key] === undefined) {
+    if(ref[key] === undefined || ref[key] === null) {
       return notFound;
     } else {
       ref = ref[key];
@@ -121,13 +131,30 @@ export function getIn(keys, notFound) {
 export function update(key, func, ...args) {
   const clone = _copy(this);
   const val = clone[key];
-  clone[key] = func(val, ...args);
+
+  if(func === undefined || func === null) {
+    clone[key] = undefined;
+  } else {
+    clone[key] = func(val, ...args);
+  }
+
   return clone;
 }
 
 export function updateIn(keys, func, ...args) {
+  if(!(keys instanceof Array)) {
+    throw new TypeError(
+      `updateIn expected second argument to be an array of keys.
+      Not ${typeof keys}!`
+    );
+  }
+
   const current = this::getIn(keys);
-  const updated = func(current, ...args);
+  const updated =
+    (func === undefined || func === null)
+      ? undefined
+      : func(current, ...args);
+
   return this::setIn(keys, updated);
 }
 
@@ -185,7 +212,7 @@ export function size() {
     return 0;
   }
 
-  return Object.keys(this).length;
+  return this::keys().length;
 }
 
 export function equals(val) {
@@ -226,15 +253,7 @@ export function equals(val) {
 }
 
 export function isEmpty() {
-  if(this instanceof Array) {
-    return this.length === 0;
-  }
-
-  if(typeof this === 'string') {
-    return this.length === 0;
-  }
-
-  return this::keys().length === 0;
+  return this::size() === 0;
 }
 
 export function first() {
@@ -242,6 +261,10 @@ export function first() {
 }
 
 export function rest() {
+  if(this === null || this === undefined) {
+    return [];
+  }
+
   if(!(this instanceof Array)) {
     throw new TypeError(`Can't get rest of ${typeof this}!`);
   }
@@ -250,22 +273,60 @@ export function rest() {
 }
 
 export function take(n) {
+  if(typeof n !== 'number') {
+    throw new TypeError(
+      `take expected first argument to be the number of items to take.
+      Not ${typeof n}!`
+    );
+  }
+
+  if(this === null || this === undefined) {
+    return [];
+  }
+
   return this.slice(0, n);
 }
 
 export function takeWhile(func) {
+  if(typeof func !== 'function') {
+    throw new TypeError(
+      `takeWhile expected first argument to be a predicate function.
+      Not ${typeof func}!`
+    );
+  }
+
+  if(this === null || this === undefined) {
+    return [];
+  }
+
   let index = 0;
   while(func(this[index]) && index < this.length) {
     index += 1;
   }
+
   return this.slice(0, index);
 }
 
 export function drop(n) {
+  if(typeof n !== 'number') {
+    throw new TypeError(
+      `drop expected first argument to be the number of items to drop.
+      Not ${typeof n}!`
+    );
+  }
+
+  if(this === null || this === undefined) {
+    return [];
+  }
+
   return this.slice(n);
 }
 
 export function dropWhile(func) {
+  if(this === undefined || this === null) {
+    return [];
+  }
+
   let index = 0;
 
   while(func(this[index]) && index < this.length) {
@@ -304,6 +365,14 @@ export function flatten() {
 }
 
 export function distinct() {
+  if(this === undefined || this === null) {
+    return [];
+  }
+
+  if(!(this instanceof Array)) {
+    throw new TypeError(`Can't distinct on a ${typeof this}.`);
+  }
+
   const unique = [];
 
   for(let i = 0; i < this.length; i++) {
@@ -359,18 +428,37 @@ export function peek() {
 }
 
 export function pop() {
+  if(this === undefined || this === null) {
+    return undefined;
+  }
+
+  if(!(this instanceof Array)) {
+    throw new TypeError(`Can't push onto ${typeof this}!`);
+  }
+
   return this.slice(0, -1);
 }
 
 export function reverse() {
+  if(!(this instanceof Array)) {
+    throw new TypeError(`Can't reverse ${typeof this}!`);
+  }
   return _copy(this).reverse();
 }
 
 export function sort(func) {
+  if(!(this instanceof Array)) {
+    throw new TypeError(`Can't sort ${typeof this}!`);
+  }
   return _copy(this).sort(func);
 }
 
 export function zip(values) {
+  if(this === undefined || values === undefined ||
+     this === null || values === null) {
+    return {};
+  }
+
   const zipped = {};
 
   for(let i = 0; i < this.length; i++) {
@@ -419,6 +507,13 @@ export function range(end) {
 }
 
 export function repeat(n, any) {
+  if(typeof n !== 'number') {
+    throw new TypeError(
+      `repeat expected first argument to be the number of times to repeat the value.
+      Not ${typeof n}!`
+    );
+  }
+
   const list = [];
 
   // prevent infinite loops
@@ -432,6 +527,13 @@ export function repeat(n, any) {
 }
 
 export function repeatedly(n, func) {
+  if(typeof n !== 'number') {
+    throw new TypeError(
+      `repeatedly expected first argument to be the number of times to call the func.
+      Not ${typeof n}!`
+    );
+  }
+
   const list = [];
 
   // prevent infinite loops

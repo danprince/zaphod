@@ -8,7 +8,7 @@ import {
 } from './';
 
 test('set', (assert) => {
-  assert.plan(6);
+  assert.plan(8);
 
   assert.deepEqual(
     ({ damogran: 5 })::set('zaphod', 'beeblebrox'),
@@ -27,6 +27,18 @@ test('set', (assert) => {
     computer::set(),
     computer,
     'should return original object for no-arg calls'
+  );
+
+  assert.deepEqual(
+    null::set('damogran', 5),
+    { damogran: 5 },
+    'should return fresh object if called on null'
+  );
+
+  assert.deepEqual(
+    undefined::set('damogran', 5),
+    { damogran: 5 },
+    'should return fresh object if called on undefined'
   );
 
   assert.is(
@@ -120,7 +132,7 @@ test('setIn', (assert) => {
 });
 
 test('remove', (assert) => {
-  assert.plan(5);
+  assert.plan(7);
 
   const jeltz = { vogon: 'captain' };
   assert.is(
@@ -133,6 +145,18 @@ test('remove', (assert) => {
     jeltz::remove('poetry'),
     jeltz,
     'should return original object when key does not exist'
+  );
+
+  assert.deepEqual(
+    null::remove('poetry'),
+    {},
+    'should return empty object when called on null'
+  );
+
+  assert.deepEqual(
+    undefined::remove('poetry'),
+    {},
+    'should return empty object when called on undefined'
   );
 
   assert.deepEqual(
@@ -209,7 +233,7 @@ test('get', (assert) => {
 });
 
 test('getIn', (assert) => {
-  assert.plan(9);
+  assert.plan(10);
 
   assert.throws(
     () => ({})::getIn(2),
@@ -248,6 +272,12 @@ test('getIn', (assert) => {
   );
 
   assert.is(
+    ({ beeble: null })::getIn(['beeble'], 'betelgeuse'),
+    'betelgeuse',
+    'should use notFound if value is null'
+  );
+
+  assert.is(
     ({ beeble: undefined })::getIn([], 'betelgeuse'),
     'betelgeuse',
     'should use notFound if passed empty array of keys'
@@ -267,7 +297,7 @@ test('getIn', (assert) => {
 });
 
 test('update', (assert) => {
-  assert.plan(2);
+  assert.plan(3);
 
   const inc = n => n + 1;
 
@@ -284,10 +314,16 @@ test('update', (assert) => {
     ({ life: 42 }),
     'should apply with any additional arguments'
   );
+
+  assert.deepEquals(
+    ({ life: 2 })::update('death', undefined),
+    ({ life: 2, death: undefined }),
+    'should set value to undefined when func is missing'
+  );
 });
 
 test('updateIn', (assert) => {
-  assert.plan(4);
+  assert.plan(5);
 
   assert.throws(
     () => ({})::updateIn(2),
@@ -315,6 +351,12 @@ test('updateIn', (assert) => {
     ({ state: { count: 2 } })::updateIn(['state', 'count'], add, 40),
     ({ state: { count: 42 } }),
     'should apply with any additional arguments'
+  );
+
+  assert.deepEquals(
+    ({ count: 2 })::update('score', undefined),
+    ({ count: 2, score: undefined }),
+    'should set value to undefined when func is missing'
   );
 });
 
@@ -575,7 +617,7 @@ test('first', (assert) => {
 });
 
 test('rest', (assert) => {
-  assert.plan(4);
+  assert.plan(6);
 
   assert.throws(
     () => false::rest(),
@@ -599,6 +641,18 @@ test('rest', (assert) => {
     [1]::rest(),
     [],
     'should return empty list for one element list'
+  );
+
+  assert.deepEquals(
+    null::rest(),
+    [],
+    'should return empty list when called on null'
+  );
+
+  assert.deepEquals(
+    null::rest(),
+    [],
+    'should return empty list when called on undefined'
   );
 });
 
@@ -626,7 +680,7 @@ test('flatten', (assert) => {
   assert.deepEqual(
     null::flatten(),
     [],
-    'should return empty array when flattening null'
+    'should return empty array when flattening null/undefined'
   );
 
   assert.deepEqual(
@@ -643,52 +697,24 @@ test('flatten', (assert) => {
 });
 
 test('distinct', (assert) => {
-  assert.plan(1);
+  assert.plan(3);
+
+  assert.throws(
+    () => 5::distinct(),
+    TypeError,
+    'should throw when called on non-array'
+  );
 
   assert.deepEquals(
     [1, 2, 2, 3, 4]::distinct(),
     [1, 2, 3, 4],
     'should remove all duplicate values'
   );
-});
-
-test('dropWhile', (assert) => {
-  assert.plan(3);
-
-  const odd = n => (n % 2 !== 0);
 
   assert.deepEquals(
-    [1, 3, 5, 6]::dropWhile(odd),
-    [6],
-    'should drop predicated values'
-  );
-
-  assert.deepEquals(
-    []::dropWhile(odd),
+    null::distinct(),
     [],
-    'should return empty array for dropWhile on empty array'
-  );
-
-  assert.deepEquals(
-    [1, 2, 3, 4, 5, 6]::dropWhile(n => n < 10),
-    [],
-    'should not continue indefinitely'
-  );
-});
-
-test('drop', (assert) => {
-  assert.plan(2);
-
-  assert.deepEquals(
-    [1, 2, 3]::drop(2),
-    [3],
-    'should drop items from the start of the array'
-  );
-
-  assert.deepEquals(
-    []::drop(5),
-    [],
-    'should return empty array for drop on empty array'
+    'should return empty array when called on null/undefined'
   );
 });
 
@@ -780,7 +806,7 @@ test('peek', (assert) => {
 });
 
 test('pop', (assert) => {
-  assert.plan(2);
+  assert.plan(4);
 
   assert.deepEquals(
     [1, 2, 3]::pop(),
@@ -793,6 +819,18 @@ test('pop', (assert) => {
     xs::pop(),
     xs,
     'should not mutate original array'
+  );
+
+  assert.throws(
+    () => 5::pop(),
+    TypeError,
+    'should throw when called on non-array'
+  );
+
+  assert.is(
+    undefined::pop(),
+    undefined,
+    'should return undefined when called on null/undefined'
   );
 });
 
@@ -837,7 +875,13 @@ test('sort', (assert) => {
 });
 
 test('take', (assert) => {
-  assert.plan(2);
+  assert.plan(4);
+
+  assert.throws(
+    () => [1, 2, 3]::take(false),
+    TypeError,
+    'should throw if called with non-numeric value for n'
+  );
 
   assert.deepEquals(
     [1, 2, 3]::take(1),
@@ -850,10 +894,22 @@ test('take', (assert) => {
     [],
     'should return empty array when taking from empty array'
   );
+
+  assert.deepEquals(
+    null::take(1),
+    [],
+    'should return empty array if called on null/undefined'
+  );
 });
 
 test('takeWhile', (assert) => {
-  assert.plan(3);
+  assert.plan(5);
+
+  assert.throws(
+    () => [1, 2, 3]::takeWhile(false),
+    TypeError,
+    'should throw if called with non-function value for func'
+  );
 
   const odd = n => (n % 2 !== 0);
 
@@ -870,14 +926,84 @@ test('takeWhile', (assert) => {
   );
 
   assert.deepEquals(
+    null::takeWhile(odd),
+    [],
+    'should return empty array when called on null/undefined'
+  );
+
+  assert.deepEquals(
     [1, 2, 3, 4, 5, 6]::takeWhile(n => n < 10),
     [1, 2, 3, 4, 5, 6],
     'should not continue indefinitely'
   );
 });
 
-test('zip', (assert) => {
+test('drop', (assert) => {
   assert.plan(4);
+
+  assert.throws(
+    () => [1, 2, 3]::drop(false),
+    TypeError,
+    'should throw if called with non-numeric value for n'
+  );
+
+  assert.deepEquals(
+    [1, 2, 3]::drop(2),
+    [3],
+    'should drop items from the start of the array'
+  );
+
+  assert.deepEquals(
+    []::drop(5),
+    [],
+    'should return empty array for drop on empty array'
+  );
+
+  assert.deepEquals(
+    null::drop(5),
+    [],
+    'should return empty array when called on null/undefined'
+  );
+});
+
+test('dropWhile', (assert) => {
+  assert.plan(5);
+
+  assert.throws(
+    () => [1, 2, 3]::dropWhile(false),
+    TypeError,
+    'should throw if called with non-function value for func'
+  );
+
+  const odd = n => (n % 2 !== 0);
+
+  assert.deepEquals(
+    [1, 3, 5, 6]::dropWhile(odd),
+    [6],
+    'should drop predicated values'
+  );
+
+  assert.deepEquals(
+    []::dropWhile(odd),
+    [],
+    'should return empty array for dropWhile on empty array'
+  );
+
+  assert.deepEquals(
+    null::dropWhile(odd),
+    [],
+    'should return empty array when called on null/undefined'
+  );
+
+  assert.deepEquals(
+    [1, 2, 3, 4, 5, 6]::dropWhile(n => n < 10),
+    [],
+    'should not continue indefinitely'
+  );
+});
+
+test('zip', (assert) => {
+  assert.plan(6);
 
   const ks = ['a', 'b', 'c'];
   const vs = [1, 2, 3];
@@ -904,6 +1030,18 @@ test('zip', (assert) => {
     ['a', 'b']::zip([undefined, 2, 3]),
     { b: 2 },
     'should ignore keys with undefined values'
+  );
+
+  assert.deepEqual(
+    undefined::zip([undefined, 2, 3]),
+    {},
+    'should return empty object if keys are undefined/null'
+  );
+
+  assert.deepEqual(
+    ['a', 'b']::zip(undefined),
+    {},
+    'should return empty object if vals are undefined/null'
   );
 });
 
@@ -978,7 +1116,13 @@ test('range', (assert) => {
 });
 
 test('repeat', (assert) => {
-  assert.plan(2);
+  assert.plan(3);
+
+  assert.throws(
+    () => repeat('a', 4),
+    TypeError,
+    'should throw when called with non-numeric n'
+  );
 
   assert.deepEqual(
     repeat(4, 10),
@@ -994,7 +1138,13 @@ test('repeat', (assert) => {
 });
 
 test('repeatedly', (assert) => {
-  assert.plan(2);
+  assert.plan(3);
+
+  assert.throws(
+    () => repeatedly('a', () => {}),
+    TypeError,
+    'should throw when called with non-numeric n'
+  );
 
   let i = 0;
   const count = () => i += 1;
