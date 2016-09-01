@@ -1,6 +1,15 @@
 "use strict";
 
-export function _copy(object) {
+const docs = 'https://zaphod.surge.sh/api';
+
+function type(any) {
+  // get type in form "[object Type]"
+  const str = Object.prototype.toString.call(any);
+  // extract just the type name
+  return str.slice(8, -1);
+}
+
+function copy(object) {
   const keys = Object.keys(object);
   const clone = object instanceof Array ? [] : {};
   for(let i = 0; i < keys.length; i++) {
@@ -25,14 +34,16 @@ export function set(key, value) {
     return this;
   }
 
-  const clone = _copy(this);
+  const clone = copy(this);
   clone[key] = value;
   return clone;
 }
 
 export function setIn(keys, value) {
   if(!(keys instanceof Array)) {
-    throw new TypeError(`setIn needs keys to be an array, not ${typeof this}!`);
+    throw new TypeError(
+      `setIn expected first argument to be an Array of keys. Not a ${type(keys)}! ${docs}/setIn`
+    );
   }
 
   if(keys.length === 0) {
@@ -40,7 +51,7 @@ export function setIn(keys, value) {
   }
 
   const isNil = this === null || this === undefined;
-  const clone = isNil ? {} : _copy(this);
+  const clone = isNil ? {} : copy(this);
 
   let ref = clone;
   let index = 0;
@@ -53,7 +64,7 @@ export function setIn(keys, value) {
       const nextKey = keys[index + 1];
       ref[key] = typeof nextKey === 'number' ? [] : {};
     } else {
-      ref[key] = _copy(ref[key]);
+      ref[key] = copy(ref[key]);
     }
 
     ref = ref[key]
@@ -80,7 +91,7 @@ export function remove(key) {
     return this;
   }
 
-  const clone = _copy(this);
+  const clone = copy(this);
   delete clone[key];
   return clone;
 }
@@ -99,7 +110,7 @@ export function get(key, notFound) {
 
 export function getIn(keys, notFound) {
   if(!(keys instanceof Array)) {
-    throw new TypeError(`getIn needs keys to be an array, not ${typeof keys}!`);
+    throw new TypeError(`getIn expected first argument to be an Array of keys. Not a ${type(keys)}! ${docs}/getIn`)
   }
 
   if(keys.length === 0) {
@@ -129,7 +140,7 @@ export function getIn(keys, notFound) {
 }
 
 export function update(key, func, ...args) {
-  const clone = _copy(this);
+  const clone = copy(this);
   const val = clone[key];
 
   if(func === undefined || func === null) {
@@ -144,8 +155,7 @@ export function update(key, func, ...args) {
 export function updateIn(keys, func, ...args) {
   if(!(keys instanceof Array)) {
     throw new TypeError(
-      `updateIn expected second argument to be an array of keys.
-      Not ${typeof keys}!`
+      `updateIn expected first argument to be an Array of keys. Not a ${type(keys)}! ${docs}/updateIn`
     );
   }
 
@@ -266,37 +276,49 @@ export function rest() {
   }
 
   if(!(this instanceof Array)) {
-    throw new TypeError(`Can't get rest of ${typeof this}!`);
+    throw new TypeError(
+      `rest can only be called on an Array. Not on a ${type(this)}! ${docs}/rest`
+    );
   }
 
   return this.slice(1);
 }
 
 export function take(n) {
-  if(typeof n !== 'number') {
+  if(this === null || this === undefined) {
+    return [];
+  }
+
+  if(!(this instanceof Array)) {
     throw new TypeError(
-      `take expected first argument to be the number of items to take.
-      Not ${typeof n}!`
+      `take can only be called on an Array. Not on a ${type(this)}! ${docs}/take`
     );
   }
 
-  if(this === null || this === undefined) {
-    return [];
+  if(typeof n !== 'number') {
+    throw new TypeError(
+      `take expected first argument to be the Number of items to take. Not a ${type(n)}! ${docs}/take`
+    );
   }
 
   return this.slice(0, n);
 }
 
 export function takeWhile(func) {
-  if(typeof func !== 'function') {
+  if(this === null || this === undefined) {
+    return [];
+  }
+
+  if(!(this instanceof Array)) {
     throw new TypeError(
-      `takeWhile expected first argument to be a predicate function.
-      Not ${typeof func}!`
+      `takeWhile can only be called on an Array. Not on a ${type(this)}! ${docs}/takeWhile`
     );
   }
 
-  if(this === null || this === undefined) {
-    return [];
+  if(typeof func !== 'function') {
+    throw new TypeError(
+      `takeWhile expected first argument to be a predicate Function. Not a ${type(func)}! ${docs}/takeWhile`
+    );
   }
 
   let index = 0;
@@ -308,15 +330,20 @@ export function takeWhile(func) {
 }
 
 export function drop(n) {
-  if(typeof n !== 'number') {
+  if(this === null || this === undefined) {
+    return [];
+  }
+
+  if(!(this instanceof Array)) {
     throw new TypeError(
-      `drop expected first argument to be the number of items to drop.
-      Not ${typeof n}!`
+      `drop can only be called on an Array. Not on a ${type(this)}! ${docs}/drop`
     );
   }
 
-  if(this === null || this === undefined) {
-    return [];
+  if(typeof n !== 'number') {
+    throw new TypeError(
+      `drop expected first argument to be the Number of items to drop. Not a ${type(n)}! ${docs}/drop`
+    );
   }
 
   return this.slice(n);
@@ -325,6 +352,18 @@ export function drop(n) {
 export function dropWhile(func) {
   if(this === undefined || this === null) {
     return [];
+  }
+
+  if(!(this instanceof Array)) {
+    throw new TypeError(
+      `dropWhile can only be called on an Array. Not on a ${type(this)}! ${docs}/dropWhile`
+    );
+  }
+
+  if(typeof func !== 'function') {
+    throw new TypeError(
+      `dropWhile expected first argument to be a predicate Function. Not a ${type(func)}! ${docs}/dropWhile`
+    );
   }
 
   let index = 0;
@@ -343,7 +382,9 @@ export function flatten() {
   }
 
   if(!(this instanceof Array)) {
-    throw new TypeError(`Can't flatten a ${typeof this}!`);
+    throw new TypeError(
+      `flatten can only be called on arrays. Not a ${type(this)}! ${docs}/flatten`
+    );
   }
 
   const stack = [this];
@@ -370,7 +411,9 @@ export function distinct() {
   }
 
   if(!(this instanceof Array)) {
-    throw new TypeError(`Can't distinct on a ${typeof this}.`);
+    throw new TypeError(
+      `distinct can only be called on arrays. Not a ${type(this)}! ${docs}/distinct`
+    );
   }
 
   const unique = [];
@@ -409,7 +452,9 @@ export function interpose(separator) {
 
 export function push(...items) {
   if(!(this instanceof Array)) {
-    throw new TypeError(`Can't push onto ${typeof this}!`);
+    throw new TypeError(
+      `push can only be called on arrays. Not a ${type(this)}! ${docs}/push`
+    );
   }
 
   if(items.length === 0) {
@@ -433,24 +478,40 @@ export function pop() {
   }
 
   if(!(this instanceof Array)) {
-    throw new TypeError(`Can't push onto ${typeof this}!`);
+    throw new TypeError(
+      `pop can only be called on arrays. Not a ${type(this)}! ${docs}/pop`
+    );
   }
 
   return this.slice(0, -1);
 }
 
 export function reverse() {
-  if(!(this instanceof Array)) {
-    throw new TypeError(`Can't reverse ${typeof this}!`);
+  if(this === undefined || this === null) {
+    return [];
   }
-  return _copy(this).reverse();
+
+  if(!(this instanceof Array)) {
+    throw new TypeError(
+      `reverse can only be called on arrays. Not a ${type(this)}! ${docs}/reverse`
+    );
+  }
+
+  return copy(this).reverse();
 }
 
 export function sort(func) {
-  if(!(this instanceof Array)) {
-    throw new TypeError(`Can't sort ${typeof this}!`);
+  if(this === undefined || this === null) {
+    return [];
   }
-  return _copy(this).sort(func);
+
+  if(!(this instanceof Array)) {
+    throw new TypeError(
+      `sort can only be called on arrays. Not a ${type(this)}! ${docs}/sort`
+    );
+  }
+
+  return copy(this).sort(func);
 }
 
 export function zip(values) {
@@ -509,8 +570,7 @@ export function range(end) {
 export function repeat(n, any) {
   if(typeof n !== 'number') {
     throw new TypeError(
-      `repeat expected first argument to be the number of times to repeat the value.
-      Not ${typeof n}!`
+      `repeat expected first argument to be the Number of times to repeat the value. Not a ${type(n)}! ${docs}/repeat`
     );
   }
 
@@ -529,8 +589,7 @@ export function repeat(n, any) {
 export function repeatedly(n, func) {
   if(typeof n !== 'number') {
     throw new TypeError(
-      `repeatedly expected first argument to be the number of times to call the func.
-      Not ${typeof n}!`
+      `repeatedly expected first argument to be the Number of times to call the func. Not a ${type(n)}! ${docs}/repeatedly`
     );
   }
 
@@ -547,7 +606,7 @@ export function repeatedly(n, func) {
 }
 
 export function transient(func) {
-  const clone = _copy(this);
+  const clone = copy(this);
 
   // do side effects
   func(clone);

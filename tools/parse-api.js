@@ -30,12 +30,10 @@ function parseApi(src) {
   const api = ast.program.body
     // we only care about named functions
     .filter(node => node.type === 'ExportNamedDeclaration')
-    // grab the functiona declaration
+    // grab the function declaration
     .map(node => node.declaration)
     // we only want to document exported functions
     .filter(node => node.type === 'FunctionDeclaration')
-    // filter out private methods
-    .filter(node => node.id.name[0] !== '_')
     // extract the name, params and location in source
     .map(node => ({
       name: node.id.name,

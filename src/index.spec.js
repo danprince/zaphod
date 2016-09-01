@@ -835,7 +835,13 @@ test('pop', (assert) => {
 });
 
 test('reverse', (assert) => {
-  assert.plan(2);
+  assert.plan(4);
+
+  assert.throws(
+    () => 4::reverse(),
+    TypeError,
+    'should throw when called on non-array'
+  );
 
   assert.deepEquals(
     [1, 2, 3]::reverse(),
@@ -849,10 +855,22 @@ test('reverse', (assert) => {
     xs,
     'should not mutate original array'
   );
+
+  assert.deepEquals(
+    undefined::reverse(),
+    [],
+    'should return empty array when called on undefined/null'
+  );
 });
 
 test('sort', (assert) => {
-  assert.plan(3);
+  assert.plan(5);
+
+  assert.throws(
+    () => 4::sort(),
+    TypeError,
+    'should throw when called on non-array'
+  );
 
   assert.deepEquals(
     [3, 2, 1]::sort(),
@@ -872,15 +890,27 @@ test('sort', (assert) => {
     [3, 2, 1],
     'should allow custom compare function'
   );
+
+  assert.deepEquals(
+    undefined::sort((a, b) => b - a),
+    [],
+    'should return empty array when called on undefined/null'
+  );
 });
 
 test('take', (assert) => {
-  assert.plan(4);
+  assert.plan(5);
 
   assert.throws(
     () => [1, 2, 3]::take(false),
     TypeError,
     'should throw if called with non-numeric value for n'
+  );
+
+  assert.throws(
+    () => 4::take(10),
+    TypeError,
+    'should throw if called on non-array'
   );
 
   assert.deepEquals(
@@ -903,7 +933,7 @@ test('take', (assert) => {
 });
 
 test('takeWhile', (assert) => {
-  assert.plan(5);
+  assert.plan(6);
 
   assert.throws(
     () => [1, 2, 3]::takeWhile(false),
@@ -912,6 +942,12 @@ test('takeWhile', (assert) => {
   );
 
   const odd = n => (n % 2 !== 0);
+
+  assert.throws(
+    () => 4::takeWhile(odd),
+    TypeError,
+    'should throw if called on non-array'
+  );
 
   assert.deepEquals(
     [1, 3, 5, 6]::takeWhile(odd),
@@ -939,12 +975,18 @@ test('takeWhile', (assert) => {
 });
 
 test('drop', (assert) => {
-  assert.plan(4);
+  assert.plan(5);
 
   assert.throws(
     () => [1, 2, 3]::drop(false),
     TypeError,
     'should throw if called with non-numeric value for n'
+  );
+
+  assert.throws(
+    () => 4::drop(10),
+    TypeError,
+    'should throw if called on non-array'
   );
 
   assert.deepEquals(
@@ -967,7 +1009,7 @@ test('drop', (assert) => {
 });
 
 test('dropWhile', (assert) => {
-  assert.plan(5);
+  assert.plan(6);
 
   assert.throws(
     () => [1, 2, 3]::dropWhile(false),
@@ -976,6 +1018,12 @@ test('dropWhile', (assert) => {
   );
 
   const odd = n => (n % 2 !== 0);
+
+  assert.throws(
+    () => 4::dropWhile(odd),
+    TypeError,
+    'should throw if called on non-array'
+  );
 
   assert.deepEquals(
     [1, 3, 5, 6]::dropWhile(odd),
