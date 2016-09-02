@@ -7,7 +7,7 @@ title: Zaphod
 
 Not everyone wants to use experimental language features, so it's also possible to use Zaphod without the function-bind operator.
 
-If you require a function from `zaphod/compat` it will take the collection as its first argument instead.
+If you require a function from `zaphod/compat` it will take the collection as its first argument, query instead.
 
 ```js
 import { set } from 'zaphod/compat';
@@ -18,9 +18,11 @@ set(obj, 'key', value)
 //  ^       ^
 //   \_____/
 //
-// Move this argument
+// We moved this argument
 ```
 
+This only applies to functions that use `::`. Others like [`identity`](/api/identity) and [`constantly`](/api/constantly) are unchanged.
+query={query} 
 Alternatively, you can shortcut the compilation step and write the resulting ES5 code yourself.
 
 ```js
