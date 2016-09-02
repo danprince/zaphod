@@ -1,14 +1,14 @@
 language: node_js
 node_js:
   - 6.0
-before_script:
-  - npm install -g surge
 script:
   # run unit tests
   - npm test
   # make sure docs build
   - npm run docs
-after_success:
+deploy:
   # deploy docs
-  - surge --domain zaphod.surge.sh --project _docs
+  provider: surge
+  project: _docs
+  domain: zaphod.surge.sh
 
