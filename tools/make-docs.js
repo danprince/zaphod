@@ -132,6 +132,9 @@ function renderInside(content, layoutPath, metadata) {
   }
 }
 
+/**
+ * Rewrite /path.html to /path/index.html for nicer urls.
+ */
 function permalinks(files, metalsmith, done) {
   const paths = Object.keys(files);
 
@@ -139,7 +142,8 @@ function permalinks(files, metalsmith, done) {
     .filter(path => path.endsWith('html'))
     .forEach(path => {
       const file = files[path];
-      if(path.endsWith('index.html')) {
+      // don't rewrite index.htmt or 404 etc
+      if(path.endsWith('index.html') || path.match(/\d\d\d\.html/)) {
         file.path = path;
       } else {
         const newPath = path.replace(/\.html$/, '/index.html');
