@@ -1,6 +1,6 @@
 import test from 'tape';
 import {
-  set, setIn, remove, get, getIn, update, updateIn, merge,
+  set, setIn, unset, get, getIn, update, updateIn, merge,
   keys, vals, size, equals, push, first, rest, flatten, distinct,
   dropWhile, drop, groupBy, interpose, isEmpty, peek, pop,
   reverse, sort, take, takeWhile, zip, constantly, identity,
@@ -8,7 +8,7 @@ import {
 } from './';
 
 test('set', (assert) => {
-  assert.plan(8);
+  assert.plan(6);
 
   assert.deepEqual(
     ({ damogran: 5 })::set('zaphod', 'beeblebrox'),
@@ -22,25 +22,13 @@ test('set', (assert) => {
     'should overwrite existing key'
   );
 
-  const computer = { deep: 'thought' };
-  assert.is(
-    computer::set(),
-    computer,
-    'should return original object for no-arg calls'
-  );
-
-  assert.deepEqual(
-    null::set('damogran', 5),
-    { damogran: 5 },
-    'should return fresh object if called on null'
-  );
-
   assert.deepEqual(
     undefined::set('damogran', 5),
     { damogran: 5 },
     'should return fresh object if called on undefined'
   );
 
+  const computer = { deep: 'thought' };
   assert.is(
     computer::set('deep', 'thought'),
     computer,
@@ -62,7 +50,7 @@ test('set', (assert) => {
 });
 
 test('setIn', (assert) => {
-  assert.plan(11);
+  assert.plan(10);
 
   assert.throws(
     () => ({})::setIn(2),
@@ -123,64 +111,46 @@ test('setIn', (assert) => {
     ({ guide: { to: { the: 'galaxy' }}}),
     'should create whole path if called on undefined'
   );
-
-  assert.deepEquals(
-    null::setIn(['guide', 'to', 'the'], 'galaxy'),
-    ({ guide: { to: { the: 'galaxy' }}}),
-    'should create whole path if called on null'
-  );
 });
 
-test('remove', (assert) => {
-  assert.plan(7);
+test('unset', (assert) => {
+  assert.plan(5);
 
   const jeltz = { vogon: 'captain' };
   assert.is(
-    jeltz::remove(),
-    jeltz,
-    'should return original object for prank calls'
-  );
-
-  assert.is(
-    jeltz::remove('poetry'),
+    jeltz::unset('poetry'),
     jeltz,
     'should return original object when key does not exist'
   );
 
   assert.deepEqual(
-    null::remove('poetry'),
-    {},
-    'should return empty object when called on null'
-  );
-
-  assert.deepEqual(
-    undefined::remove('poetry'),
+    undefined::unset('poetry'),
     {},
     'should return empty object when called on undefined'
   );
 
   assert.deepEqual(
-    ({ damogran: 5, zaphod: 'beeb' })::remove('zaphod'),
+    ({ damogran: 5, zaphod: 'beeb' })::unset('zaphod'),
     { damogran: 5 },
-    'should remove a key from an object'
+    'should unset a key from an object'
   );
 
   const arthur = { name: 'dent' };
   assert.not(
-    arthur::remove('name'),
+    arthur::unset('name'),
     arthur,
     'should not mutate original object'
   );
 
   assert.not(
-    ['pan', 'galactic', 'gargle', 'blaster']::remove(0),
+    ['pan', 'galactic', 'gargle', 'blaster']::unset(0),
     [ , 'galactic', 'gargle', 'blaster'],
     'should work with arrays too'
   );
 });
 
 test('get', (assert) => {
-  assert.plan(8);
+  assert.plan(7);
 
   assert.is(
     ({ paranoid: 'android' })::get('paranoid'),
@@ -224,16 +194,10 @@ test('get', (assert) => {
     42,
     'should return notFound when called on undefined'
   );
-
-  assert.is(
-    null::get('meaning', 42),
-    42,
-    'should return notFound when called on null'
-  );
 });
 
 test('getIn', (assert) => {
-  assert.plan(10);
+  assert.plan(8);
 
   assert.throws(
     () => ({})::getIn(2),
@@ -272,12 +236,6 @@ test('getIn', (assert) => {
   );
 
   assert.is(
-    ({ beeble: null })::getIn(['beeble'], 'betelgeuse'),
-    'betelgeuse',
-    'should use notFound if value is null'
-  );
-
-  assert.is(
     ({ beeble: undefined })::getIn([], 'betelgeuse'),
     'betelgeuse',
     'should use notFound if passed empty array of keys'
@@ -287,12 +245,6 @@ test('getIn', (assert) => {
     undefined::getIn(['meaning'], 42),
     42,
     'should return notFound when called on undefined'
-  );
-
-  assert.is(
-    null::getIn(['meaning'], 42),
-    42,
-    'should return notFound when called on null'
   );
 });
 
@@ -405,20 +357,20 @@ test('keys', (assert) => {
   );
 
   assert.deepEquals(
-    null::keys(),
-    [],
-    'should return empty array for null'
-  );
-
-  assert.deepEquals(
     undefined::keys(),
     [],
     'should return empty array for undefined'
   );
+
+  assert.deepEquals(
+    null::keys(),
+    [],
+    'should return empty array for null'
+  );
 });
 
 test('vals', (assert) => {
-  assert.plan(5);
+  assert.plan(4);
 
   assert.deepEquals(
     ({ arthur: 'd', ford: 'p', zaphod: 'b' })::vals(),
@@ -437,12 +389,6 @@ test('vals', (assert) => {
     'zaphod'::vals(),
     ['z', 'a', 'p', 'h', 'o', 'd'],
     'should work with strings'
-  );
-
-  assert.deepEquals(
-    null::vals(),
-    [],
-    'should return empty array for null'
   );
 
   assert.deepEquals(
@@ -617,7 +563,7 @@ test('first', (assert) => {
 });
 
 test('rest', (assert) => {
-  assert.plan(6);
+  assert.plan(5);
 
   assert.throws(
     () => false::rest(),
@@ -644,20 +590,14 @@ test('rest', (assert) => {
   );
 
   assert.deepEquals(
-    null::rest(),
-    [],
-    'should return empty list when called on null'
-  );
-
-  assert.deepEquals(
-    null::rest(),
+    undefined::rest(),
     [],
     'should return empty list when called on undefined'
   );
 });
 
 test('flatten', (assert) => {
-  assert.plan(6);
+  assert.plan(5);
 
   assert.deepEquals(
     [1, 2, 3, 4]::flatten(),
@@ -675,12 +615,6 @@ test('flatten', (assert) => {
     [1, [[2], [[3], 4]]]::flatten(),
     [1, 2, 3, 4],
     'should flatten deep nested vectors in order'
-  );
-
-  assert.deepEqual(
-    null::flatten(),
-    [],
-    'should return empty array when flattening null/undefined'
   );
 
   assert.deepEqual(
@@ -712,9 +646,9 @@ test('distinct', (assert) => {
   );
 
   assert.deepEquals(
-    null::distinct(),
+    undefined::distinct(),
     [],
-    'should return empty array when called on null/undefined'
+    'should return empty array when called on undefined'
   );
 });
 
@@ -830,7 +764,7 @@ test('pop', (assert) => {
   assert.is(
     undefined::pop(),
     undefined,
-    'should return undefined when called on null/undefined'
+    'should return undefined when called on undefined'
   );
 });
 
@@ -859,7 +793,7 @@ test('reverse', (assert) => {
   assert.deepEquals(
     undefined::reverse(),
     [],
-    'should return empty array when called on undefined/null'
+    'should return empty array when called on undefined'
   );
 });
 
@@ -894,7 +828,7 @@ test('sort', (assert) => {
   assert.deepEquals(
     undefined::sort((a, b) => b - a),
     [],
-    'should return empty array when called on undefined/null'
+    'should return empty array when called on undefined'
   );
 });
 
@@ -926,9 +860,9 @@ test('take', (assert) => {
   );
 
   assert.deepEquals(
-    null::take(1),
+    undefined::take(1),
     [],
-    'should return empty array if called on null/undefined'
+    'should return empty array if called on undefined'
   );
 });
 
@@ -962,9 +896,9 @@ test('takeWhile', (assert) => {
   );
 
   assert.deepEquals(
-    null::takeWhile(odd),
+    undefined::takeWhile(odd),
     [],
-    'should return empty array when called on null/undefined'
+    'should return empty array when called on undefined'
   );
 
   assert.deepEquals(
@@ -1002,9 +936,9 @@ test('drop', (assert) => {
   );
 
   assert.deepEquals(
-    null::drop(5),
+    undefined::drop(5),
     [],
-    'should return empty array when called on null/undefined'
+    'should return empty array when called on undefined'
   );
 });
 
@@ -1038,9 +972,9 @@ test('dropWhile', (assert) => {
   );
 
   assert.deepEquals(
-    null::dropWhile(odd),
+    undefined::dropWhile(odd),
     [],
-    'should return empty array when called on null/undefined'
+    'should return empty array when called on undefined'
   );
 
   assert.deepEquals(
@@ -1083,13 +1017,13 @@ test('zip', (assert) => {
   assert.deepEqual(
     undefined::zip([undefined, 2, 3]),
     {},
-    'should return empty object if keys are undefined/null'
+    'should return empty object if keys are undefined'
   );
 
   assert.deepEqual(
     ['a', 'b']::zip(undefined),
     {},
-    'should return empty object if vals are undefined/null'
+    'should return empty object if vals are undefined'
   );
 });
 

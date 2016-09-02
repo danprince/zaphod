@@ -3,7 +3,7 @@ layout: doc.html
 description: >
  Set a key in a collection to a new value.
 see-also:
-  - remove
+  - unset
   - setIn
   - merge
   - update
@@ -30,7 +30,7 @@ foo::set('qux', 'quz');
 // => { bar: 'baz' }
 ```
 
-It also works with arrays.
+`set` also works with arrays.
 
 ```js
 import { set } from 'zaphod';
