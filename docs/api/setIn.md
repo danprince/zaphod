@@ -10,7 +10,7 @@ see-also:
 
 The `setIn` function will set the nested key described by `keys` to `value`. It is similar to [`set`](../set) but also works for nested paths.
 
-If the path in `keys` doesn't already exist, then it will be created using objects.
+If the path in `keys` doesn't already exist, then it will be created using values that correspond to the keys (objects will be created for strings, arrays will be created for numbers).
 
 ## Examples
 
