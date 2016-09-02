@@ -11,4 +11,5 @@ deploy:
   provider: surge
   project: _docs
   domain: zaphod.surge.sh
+  skip_cleanup: true
 
