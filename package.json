@@ -2,7 +2,7 @@
   "name": "zaphod",
   "version": "0.1.7",
   "description": "Clojure's API for JavaScript's Objects",
-  "main": "index.js",
+  "main": "zaphod.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "test": "babel-tape-runner src/index.spec.js | tap-spec",

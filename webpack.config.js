@@ -3,7 +3,7 @@ const package = require('./package');
 module.exports = {
   target: 'node',
   entry: {
-    index: [__dirname + '/src/index.js'],
+    index: [__dirname + '/src/zaphod.js'],
     compat: __dirname + '/src/compat.js'
   },
   output: {
