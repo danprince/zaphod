@@ -1,6 +1,6 @@
 # Zaphod
 [![Travis](https://img.shields.io/travis/danprince/zaphod.svg?maxAge=2592000)](https://travis-ci.org/danprince/zaphod)
-[![Coveralls](https://img.shields.io/coveralls/danprince/zaphod.svg?maxAge=2592000)]()
+[![Coveralls](https://img.shields.io/coveralls/danprince/zaphod.svg?maxAge=2592000)](https://coveralls.io/github/danprince/zaphod)
 [![npm](https://img.shields.io/npm/v/zaphod.svg?maxAge=2592000)](https://npm.com/package/zaphod)
 [![Gitter](https://img.shields.io/gitter/room/zaphodjs/Lobby.svg?maxAge=2592000)](https://gitter.im/zaphodjs/Lobby)
 [![API Docs](https://img.shields.io/badge/API-Docs-blue.svg)][4]
