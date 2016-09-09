@@ -10,8 +10,8 @@
     "watch-docs": "watch -p 'docs/**' -c 'npm run docs'",
     "prepublish": "webpack",
     "postpublish": "rm zaphod.js compat.js",
-    "cover": "export BABEL_ENV=test; nyc node src/index.spec.js | tap-spec",
-    "postcover": "nyc report --reporter=text-lcov | coveralls"
+    "cover": "BABEL_ENV=test; nyc node src/index.spec.js | tap-spec",
+    "report": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "immutable",
