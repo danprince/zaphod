@@ -1,6 +1,6 @@
 {
   "name": "zaphod",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Clojure's API for JavaScript's Objects",
   "main": "zaphod.js",
   "jsnext:main": "src/index.js",

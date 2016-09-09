@@ -541,7 +541,7 @@ test('push', (assert) => {
 });
 
 test('first', (assert) => {
-  assert.plan(3);
+  assert.plan(4);
 
   assert.is(
     [1, 2, 3]::first(),
@@ -559,6 +559,12 @@ test('first', (assert) => {
     []::first(),
     undefined,
     'should return undefined for empty list'
+  );
+
+  assert.is(
+    undefined::first(),
+    undefined,
+    'should return undefined when called on undefined'
   );
 });
 

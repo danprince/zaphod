@@ -249,6 +249,10 @@ export function isEmpty() {
 }
 
 export function first() {
+  if(this == undefined) {
+    return undefined;
+  }
+
   return this[0];
 }
 
