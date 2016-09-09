@@ -3,3 +3,5 @@ node_modules
 _docs
 /zaphod.js
 /compat.js
+coverage/
+.nyc_output/
