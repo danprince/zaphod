@@ -439,7 +439,7 @@ test('size', (assert) => {
 });
 
 test('equals', (assert) => {
-  assert.plan(13);
+  assert.plan(15);
 
   assert.ok(
     (2)::equals(2),
@@ -503,6 +503,16 @@ test('equals', (assert) => {
   assert.ok(
     (NaN)::equals(NaN),
     'should find equality between NaNs'
+  );
+
+  assert.notOk(
+    ({ a: 1, b: 2 })::equals({ a: 1 }),
+    'should not find equality between objects with different keys'
+  );
+
+  assert.notOk(
+    ({ a: 1 })::equals({ a: 2 }),
+    'should not find equality between objects with different props'
   );
 
   assert.ok(

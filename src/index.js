@@ -153,10 +153,6 @@ export function updateIn(keys, func, ...args) {
 }
 
 export function merge(...objects) {
-  if(objects.length === 0) {
-    return this;
-  }
-
   // filter out falsy values
   const values = objects.filter(object => object);
 
@@ -228,15 +224,16 @@ export function equals(val) {
     return this.toString() === val.toString();
   }
 
-  const ownKeys = keys(this);
-  const altKeys = keys(val);
+  const ownKeys = this::keys();
+  const altKeys = val::keys();
+
   if(ownKeys.length !== altKeys.length) {
     return false;
   }
 
   for(let i = 0; i < ownKeys.length; i++) {
     const key = ownKeys[i];
-    if(!equals(this[key], val[key])) {
+    if(!this[key]::equals(val[key])) {
       return false;
     }
   }
@@ -417,10 +414,6 @@ export function interpose(separator) {
 export function push(...items) {
   if(!(this instanceof Array)) {
     throw new TypeError(`push can only be called on arrays. Not a ${type(this)}! ${docs}/push`);
-  }
-
-  if(items.length === 0) {
-    return this;
   }
 
   return this.concat(items);
