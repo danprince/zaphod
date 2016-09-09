@@ -2,8 +2,8 @@ language: node_js
 node_js:
   - 6.0
 script:
-  # run unit tests
-  - npm test
+  # tests & coverage
+  - npm run cover
   # make sure docs build
   - npm run docs
 deploy:
@@ -11,5 +11,6 @@ deploy:
   provider: surge
   project: _docs
   domain: zaphod.surge.sh
+  # we need _docs to deploy
   skip_cleanup: true
 
