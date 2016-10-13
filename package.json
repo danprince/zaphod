@@ -8,10 +8,13 @@
     "test": "babel-tape-runner src/index.spec.js | tap-spec",
     "docs": "node tools/make-docs.js",
     "watch-docs": "watch -p 'docs/**' -c 'npm run docs'",
-    "prepublish": "webpack",
-    "postpublish": "rm zaphod.js compat.js",
+    "prepublish": "webpack && npm run minify",
+    "postpublish": "rm zaphod.*js compat.*js",
     "cover": "BABEL_ENV=test nyc node src/index.spec.js | tap-spec",
-    "report": "nyc report --reporter=text-lcov | coveralls"
+    "report": "nyc report --reporter=text-lcov | coveralls",
+    "minify": "npm run minify:zaphod && npm run minify:compat",
+    "minify:zaphod": "uglifyjs zaphod.js -o zaphod.min.js",
+    "minify:compat": "uglifyjs compat.js -o compat.min.js"
   },
   "keywords": [
     "immutable",
@@ -39,6 +42,7 @@
     "nyc": "^8.1.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
+    "uglify-js": "^2.7.3",
     "watch-cli": "^0.2.1",
     "webpack": "^1.13.2"
   },
