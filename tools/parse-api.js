@@ -28,9 +28,9 @@ function parseApi(src) {
   });
 
   const api = ast.program.body
-    // we only care about named functions
+    // we only care about named exports (all other vars are private)
     .filter(node => node.type === 'ExportNamedDeclaration')
-    // grab the function declaration
+    // grab the actual function declaration
     .map(node => node.declaration)
     // we only want to document exported functions
     .filter(node => node.type === 'FunctionDeclaration')
