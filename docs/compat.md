@@ -21,8 +21,8 @@ set(obj, 'key', value)
 // We moved this argument
 ```
 
-This only applies to functions that use `::`. Others like [`identity`](/api/identity) and [`constantly`](/api/constantly) are unchanged.
-query={query} 
+This only applies to the functions that use `::`. Others like [`identity`](/api/identity) and [`constantly`](/api/constantly) are unchanged.
+
 Alternatively, you can shortcut the compilation step and write the resulting ES5 code yourself.
 
 ```js
