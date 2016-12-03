@@ -41,8 +41,16 @@ Not everyone is ready to adopt experimental syntax, but it's completely possible
 ## Usage
 Zaphod is available through npm.
 
-```js
+```sh
 npm install --save zaphod
+```
+
+Or you can get it from a CDN.
+
+```sh
+https://unpkg.com/zaphod@0.2.0
+# or
+https://unpkg.com/zaphod@0.2.0
 ```
 
 Check out the [getting started](/getting-started/) guide for an in-depth explanation on configuring Babel to work with the function-bind operator.
