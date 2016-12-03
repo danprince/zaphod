@@ -48,9 +48,9 @@ npm install --save zaphod
 Or you can get it from a CDN.
 
 ```sh
-https://unpkg.com/zaphod@0.2.0
+https://unpkg.com/zaphod
 # or
-https://unpkg.com/zaphod@0.2.0
+https://unpkg.com/zaphod/compat
 ```
 
 Check out the [getting started](/getting-started/) guide for an in-depth explanation on configuring Babel to work with the function-bind operator.

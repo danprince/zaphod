@@ -20,7 +20,7 @@ However, you don't need to know Clojure to make the most of Zaphod. This library
 
 Find the [docs][4], [cheatsheet][5] and [rationale][6] at [the website][3].
 
-```js
+```sh
 npm install --save zaphod
 # or
 https://unpkg.com/zaphod@0.2.0
