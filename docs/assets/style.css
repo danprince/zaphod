@@ -156,6 +156,7 @@ blockquote {
   padding: 0 .5em;
   outline: none;
   color: #fff;
+  font-size: .8em;
 }
 
 .input--search:focus {
