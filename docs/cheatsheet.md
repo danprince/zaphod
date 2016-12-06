@@ -132,7 +132,7 @@ The `.push` method mutates an array by adding new items to the end of it. Then i
 [1, 2, 3].push(4);
 ```
 
-The [`push`](/api/push) function returns a new array with the items pushoined onto the end.
+The [`push`](/api/push) function returns a new array with the items added onto the end.
 
 ```js
 [1, 2, 3]::push(4)
@@ -147,7 +147,7 @@ The `.pop` method mutates an array by removing the final item, then returning th
 [1, 2, 3].pop()
 ```
 
-The [`pop`](/api/pop) _function_ returns a new array with the final item removed.
+The [`pop`](/api/pop) function returns a new array with the final item removed.
 
 ```js
 [1, 2, 3]::pop()
@@ -162,7 +162,7 @@ The `.sort` method mutates the array by sorting it in place.
 [2, 1, 3].sort()
 ```
 
-The [`sort`](/api/sort) _function_ returns a new sorted copy of the array.
+The [`sort`](/api/sort) function returns a new sorted copy of the array.
 
 ```js
 [2, 1, 3]::sort()
@@ -177,7 +177,7 @@ The `.reverse` method mutates the array by reversing it in place.
 [3, 2, 1].reverse()
 ```
 
-The [`reverse`](/api/reverse) _function_ returns a new reversed copy of the array.
+The [`reverse`](/api/reverse) function returns a reversed copy of the array.
 
 ```js
 [3, 2, 1]::reverse()
