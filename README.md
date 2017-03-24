@@ -23,7 +23,7 @@ Find the [docs][4], [cheatsheet][5] and [rationale][6] at [the website][3].
 ```sh
 npm install --save zaphod
 # or
-https://unpkg.com/zaphod@0.2.0
+https://unpkg.com/zaphod
 ```
 
 Check out the [getting started][7] guide for an in-depth explanation on configuring Babel to work with the function-bind operator.
