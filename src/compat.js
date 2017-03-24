@@ -8,6 +8,7 @@ function rebind(f) {
 
 export const set = rebind(z.set);
 export const setIn = rebind(z.setIn);
+export const unset = rebind(z.unset);
 export const remove = rebind(z.remove);
 export const get = rebind(z.get);
 export const getIn = rebind(z.getIn);
