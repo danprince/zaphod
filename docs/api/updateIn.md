@@ -24,7 +24,7 @@ import { updateIn } from 'zaphod';
 const guide = { earth: { harmless: true } };
 const not = bool => !bool;
 
-guide::updateIn(['earth', 'harmless'], bool => !bool)
+guide::updateIn(['earth', 'harmless'], not)
 // => { earth: { harmless: false } }
 ```
 
